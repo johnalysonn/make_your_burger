@@ -25,11 +25,9 @@
                     <td>
                         <div id="actions">
                             <select name="" id="">
-                                <option value="Solicitado">Solicitado</option>
-                                <option value="Em producao" selected>Em produção</option>
-                                <option value="Finalizado">Finalizado</option>
+                                <option :value="status.tipo" v-for="status in allStatus" :key="status.id" :selected="status.tipo == pedido.status">{{status.tipo}}</option>
                             </select>
-                            <button>Cancelar</button>
+                            <button @click="deletePedido(pedido.id)">Cancelar</button>
                         </div>
                     </td>
                 </tr>
@@ -46,6 +44,7 @@ export default{
     data(){
         return{
             pedidos: [],
+            allStatus: null,
         }
     },
     methods:{
@@ -54,10 +53,25 @@ export default{
             const data = await req.json();
 
             this.pedidos = data;
+        },
+        async getAllStatus(){
+            const req = await fetch('http://localhost:3000/status');
+            const data = await req.json();
+
+            this.allStatus = data;
+        },
+        async deletePedido(pedido_id){
+            const req = await fetch(`http://localhost:3000/burgers/${pedido_id}`,{
+                method: "delete",
+            });
+            const pedido = await req.json();
+
+            this.getPedidos();
         }
     },
     mounted(){
         this.getPedidos();
+        this.getAllStatus();
     },
 }
 </script>
