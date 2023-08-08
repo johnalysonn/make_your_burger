@@ -1,5 +1,6 @@
 <template>
     <div id="container-main">
+        <Message :message="msg" v-show="msg" style="margin: auto; width: 50%; margin-bottom: 20px"/>
         <table v-if="pedidos.length > 0">
             <thead>
                 <tr>
@@ -24,7 +25,7 @@
                     </td>
                     <td>
                         <div id="actions">
-                            <select name="" id="">
+                            <select name="" id="" @change="updatePedido($event, pedido.id)">
                                 <option :value="status.tipo" v-for="status in allStatus" :key="status.id" :selected="status.tipo == pedido.status">{{status.tipo}}</option>
                             </select>
                             <button @click="deletePedido(pedido.id)">Cancelar</button>
@@ -39,12 +40,15 @@
     </div>
 </template>
 <script>
+import Message from "./Message.vue"
+
 export default{
     name: "Dashboard",
     data(){
         return{
             pedidos: [],
             allStatus: null,
+            msg: null
         }
     },
     methods:{
@@ -67,12 +71,44 @@ export default{
             const pedido = await req.json();
 
             this.getPedidos();
+
+            this.msg = `Pedido n°${pedido_id} atualizado com sucesso`;
+
+            setTimeout(() => this.msg = "", 2000);
+
+        },
+        async updatePedido(event, pedido_id){
+            const option = event.target.value;
+            const data = JSON.stringify({status: option});
+
+            const req = await fetch(`http://localhost:3000/burgers/${pedido_id}`, {
+                method: 'PATCH',
+                headers: {'Content-Type' : 'application/json'},
+                body: data
+            });
+
+            const response = await req.json();
+
+            if(response.status == 'Em produção'){
+                this.msg = `O pedido n°${pedido_id} está em produção`;
+            }
+            else if(response.status == 'Solicitado'){
+                this.msg = `O pedido n°${pedido_id} foi solitado`;
+            }
+            else{
+                this.msg = `O pedido n°${pedido_id} foi finalizado`;
+            }
+
+            setTimeout(() => this.msg = "", 2000);
         }
     },
     mounted(){
         this.getPedidos();
         this.getAllStatus();
     },
+    components: {
+        Message
+    }
 }
 </script>
 <style scoped>

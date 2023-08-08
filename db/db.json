@@ -88,17 +88,6 @@
       ],
       "status": "Solicitado",
       "id": 1
-    },
-    {
-      "nome": "Geísa Lucas",
-      "pao": "integral",
-      "carne": "Alcatra",
-      "opcionais": [
-        "Salame",
-        "Bacon"
-      ],
-      "status": "Solicitado",
-      "id": 2
     }
   ]
 }
