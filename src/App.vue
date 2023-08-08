@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar :logo_src="src" :logo_name="name"/>
-    <router-view/>
+    <router-view style="min-height: 70vh"/>
     <Footer/>
   </div>
 </template>

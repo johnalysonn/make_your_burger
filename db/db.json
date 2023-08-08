@@ -81,29 +81,12 @@
     {
       "nome": "John Alyson",
       "pao": "integral",
-      "carne": "Veggie burger",
+      "carne": "Alcatra",
       "opcionais": [
-        "Bacon",
-        "Salame",
-        "Cebola roxa",
-        "Pepino",
-        "Tomate",
-        "Cheddar"
+        "Bacon"
       ],
       "status": "Solicitado",
       "id": 1
-    },
-    {
-      "nome": "Geísa Lucas",
-      "pao": "integral",
-      "carne": "Picanha",
-      "opcionais": [
-        "Bacon",
-        "Salame",
-        "Pepino"
-      ],
-      "status": "Solicitado",
-      "id": 2
     }
   ]
 }
